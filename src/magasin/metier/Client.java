@@ -1,12 +1,22 @@
 package magasin.metier;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * classe métier de gestion d'un client
+ *
+ * @author Michel Poriaux
+ * @version 1.0
+ * @see ComFact
+ */
 
 public class Client {
-
+    /**
+     * identifiant du client
+     */
     protected int idclient;
     /**
      * nom du client
@@ -40,13 +50,6 @@ public class Client {
      * ensemble des commandes du client
      */
     protected List<ComFact> comFacts = new ArrayList<>();
-
-    /**
-     * constructeur par défaut
-     */
-    public Client() {
-
-    }
 
 
     /**
@@ -235,6 +238,11 @@ public class Client {
         this.comFacts = comFacts;
     }
 
+    /**
+     * méthode de vérification d'égalité de deux clients
+     * @param o  autre client
+     * @return égalité ou pas
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -243,7 +251,11 @@ public class Client {
         return nom.equals(client.nom) && prenom.equals(client.prenom) && tel.equals(client.tel);
     }
 
-    @Override
+    /**
+     * calcul du hashcode du client
+     * @return hashcode du client
+     *       */
+        @Override
     public int hashCode() {
         return Objects.hash(nom, prenom, tel);
     }
@@ -266,6 +278,44 @@ public class Client {
         comFacts.remove(cf);
         cf.setClient(null);
     }
+
+    /**
+     * Recherche des factures payées
+     * @return liste des factures payées
+     */
+    public List<ComFact>  factPayees() {
+        List<ComFact> lcf = new ArrayList<>();
+        for(ComFact cf : comFacts){
+            if(cf.getEtat()=='p') lcf.add(cf);
+        }
+        return lcf;
+    }
+
+    /**
+     * Recherche des factures en retard
+     * @return liste des factures en retard
+     */
+
+    public List<ComFact> factRetard() {
+        List<ComFact> lcf = new ArrayList<>();
+        for(ComFact cf : comFacts){
+            if(cf.getEtat()=='f' && cf.getDatePayement()==null && cf.getDateFacturation().plusDays(30).isBefore(LocalDate.now()))lcf.add(cf);
+        }
+        return lcf;
+    }
+
+    /**
+     * Recherche des factures non payées
+     * @return liste des factures non payées
+     */
+    public List<ComFact> factNonPayees() {
+        List<ComFact> lcf = new ArrayList<>();
+        for (ComFact cf : comFacts) {
+            if (cf.getEtat() == 'f' && cf.getDatePayement() == null) lcf.add(cf);
+        }
+        return lcf;
+    }
+
 
     /**
      * méthode toString

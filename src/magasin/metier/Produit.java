@@ -158,31 +158,57 @@ public class Produit {
     */
 
 
-
+    /**
+     * vérification si le stock est suffisant
+     * @return stock suffisant ou pas
+     */
     public boolean stockSuffisant(){
         return stock>=stockMin;
     }
 
+    /**
+     * calcul de la quantité à recommander pour réalimenter le stock du produit
+     * @return quantité à recommander
+     */
     public int quantiteACommander(){
         int stockMax = (int)(stockMin*1.5);
         if (stockMax>stock) return stockMax-stock;
         else return 0;
       }
 
+    /**
+     * Réapprovisionnement du stock
+     * @param q quantité du réapprovisionnement
+     */
     public void reapprovisionner(int q){
         stock+=q;
     }
 
+
+    /**
+     * Demande de diminution du stock
+     * @param q valeur de la diminution
+     * @return diminution effectuée ou pas selon la valeur en stock
+     */
     public boolean retirer(int q){
         if(q>stock) return false;
         stock-=q;
         return true;
     }
 
+    /**
+     * calcul de la valeur monétaire en stock
+     * @return valeur monétaire du stock
+     */
     public BigDecimal valeurStock(){
        return phtva.multiply(new BigDecimal(stock));
     }
 
+    /**
+     * vérification de l'égalité de deux produits basée sur le numéro du produit
+     * @param o
+     * @return égalité ou pas
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,6 +217,10 @@ public class Produit {
         return numprod.equals(produit.numprod);
     }
 
+    /**
+     * calcul du hashcode du produit
+     * @return valeur du hashcode du produit
+     */
     @Override
     public int hashCode() {
         return Objects.hash(numprod);

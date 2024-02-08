@@ -58,13 +58,6 @@ public class ComFact {
     protected List<Ligne> lignes = new ArrayList<>();
 
     /**
-     * constructeur par défaut
-     */
-    public ComFact() {
-    }
-
-
-    /**
      * constructeur paramétré
      *
      * @param idcommande numéro de commande
@@ -242,9 +235,37 @@ public class ComFact {
      * @param lignes liste des lignes de commande
      */
     public void setLignes(List<Ligne> lignes) {
-        this.lignes = lignes;
+                this.lignes = lignes;
+                majMontant();
     }
 
+    /**
+     * méthode toString
+     * @return informations complètes de la commande
+     */
+
+    /**
+     * ajout d'une ligne à la commande
+     * @param ligne ligne à ajouter
+     * @return ajout effectué ou pas
+     */
+    public boolean  addLigne(Ligne ligne){
+        for(Ligne l : lignes){
+            if(l.getProduit().equals(ligne.getProduit())) return false;
+        }
+        lignes.add(ligne);
+        majMontant();
+        return true;
+    }
+
+    /**
+     * suppression d'une ligne à la commande
+     * @param ligne ligne à supprimer
+     */
+    public void supLigne(Ligne ligne){
+        lignes.remove(ligne);
+        majMontant();
+    }
     @Override
     public String toString() {
         return "ComFact{" +
@@ -260,11 +281,19 @@ public class ComFact {
     }
 
     /**
-     * méthode toString
-     *
-     * @return informations complètes
+     * mise à jour du montant de la commande sur base des lignes de commande
      */
+    public void majMontant(){
+        montant = new BigDecimal(0).setScale(0,RoundingMode.HALF_UP);
+        for(Ligne ligne : lignes){
+            montant.add(ligne.valLigne());
+        }
+    }
 
+    /**
+     * calcul du hashcode de la commande
+     * @return hashcode de la commande
+     */
 
     @Override
     public int hashCode() {
@@ -272,6 +301,12 @@ public class ComFact {
         hash = 89 * hash + this.idcommande;
         return hash;
     }
+
+    /**
+     * vérification de l'égalité de deux commandes basée sur l'id de la commande
+     * @param obj autre commande
+     * @return égalité ou pas
+     */
 
     @Override
     public boolean equals(Object obj) {
