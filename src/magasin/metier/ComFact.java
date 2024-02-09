@@ -283,11 +283,23 @@ public class ComFact {
     /**
      * mise à jour du montant de la commande sur base des lignes de commande
      */
-    public void majMontant(){
+    private void majMontant(){
         montant = new BigDecimal(0).setScale(0,RoundingMode.HALF_UP);
         for(Ligne ligne : lignes){
             montant.add(ligne.valLigne());
         }
+    }
+
+    /**
+     * vérification du retard d'une facture
+     * @return en retard ou pas
+     */
+    public boolean estEnRetard(){
+        return etat=='f' && datePayement==null &&  dateFacturation.plusDays(30).isBefore(LocalDate.now());
+    }
+
+    public boolean estNonPayee(){
+        return etat=='f' && datePayement == null;
     }
 
     /**

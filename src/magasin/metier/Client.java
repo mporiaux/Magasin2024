@@ -248,17 +248,19 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return nom.equals(client.nom) && prenom.equals(client.prenom) && tel.equals(client.tel);
+        return idclient == client.idclient;
     }
 
     /**
      * calcul du hashcode du client
-     * @return hashcode du client
-     *       */
-        @Override
+     * @return hashcode
+     */
+
+     @Override
     public int hashCode() {
-        return Objects.hash(nom, prenom, tel);
+        return Objects.hash(idclient);
     }
+
 
 
     /**
@@ -299,7 +301,7 @@ public class Client {
     public List<ComFact> factRetard() {
         List<ComFact> lcf = new ArrayList<>();
         for(ComFact cf : comFacts){
-            if(cf.getEtat()=='f' && cf.getDatePayement()==null && cf.getDateFacturation().plusDays(30).isBefore(LocalDate.now()))lcf.add(cf);
+            if(cf.estEnRetard())lcf.add(cf);
         }
         return lcf;
     }
@@ -311,7 +313,7 @@ public class Client {
     public List<ComFact> factNonPayees() {
         List<ComFact> lcf = new ArrayList<>();
         for (ComFact cf : comFacts) {
-            if (cf.getEtat() == 'f' && cf.getDatePayement() == null) lcf.add(cf);
+            if (cf.estNonPayee()) lcf.add(cf);
         }
         return lcf;
     }
