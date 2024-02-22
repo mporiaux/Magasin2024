@@ -2,7 +2,9 @@ package magasin.metier;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLOutput;
 import java.util.Objects;
+import java.util.Scanner;
 
 /**
  * classe métier de gestion d'un produit
@@ -181,7 +183,8 @@ public class Produit {
      * @param q quantité du réapprovisionnement
      */
     public void reapprovisionner(int q){
-        stock+=q;
+
+             stock+=q;
     }
 
 

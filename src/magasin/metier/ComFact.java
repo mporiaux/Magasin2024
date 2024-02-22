@@ -256,6 +256,7 @@ public class ComFact {
         lignes.add(ligne);
         majMontant();
         return true;
+        //TODO vérifier produit
     }
 
     /**
