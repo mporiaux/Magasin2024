@@ -3,6 +3,7 @@ package mvc.view;
 
 import magasin.metier.Client;
 import magasin.metier.ComFact;
+import magasin.metier.Ligne;
 import magasin.metier.Produit;
 
 import java.math.BigDecimal;
@@ -80,18 +81,24 @@ public class ComfactViewConsole extends ComfactAbstractView {
         Produit pr = pv.selectionner();
         System.out.print("quantité :");
         int q = sc.nextInt();
-        comfactController.addProduit(cf, q,pr);
+        boolean ok = comfactController.addProduit(cf, q,pr);
+        if(ok) affMsg("produit ajouté");
+        else affMsg("erreur lors de l'ajout du produit");
     }
 
     private void listerProduits(ComFact cf) {
         System.out.println("produits de la commande");
-        comfactController.getProduits(cf);
+        List<Ligne> ll = comfactController.getProduits(cf);
+        if(ll.isEmpty()) affMsg("aucune ligne pour cette commmande");
+        else affList(ll);
     }
 
     private void supprimerProduit(ComFact cf) {
         System.out.println("suppression d'une ligne");
         Produit pr = pv.selectionner();
-        comfactController.supProduit(cf,pr);
+        boolean ok = comfactController.supProduit(cf,pr);
+        if(ok) affMsg("ligne de produit supprimée");
+        else affMsg("ligne de produit non supprimée");
     }
 
     private void modifierProduit(ComFact cf) {
@@ -99,7 +106,9 @@ public class ComfactViewConsole extends ComfactAbstractView {
         Produit pr = pv.selectionner();
         System.out.print("quantité :");
         int q = sc.nextInt();
-        comfactController.modifProduit(cf,pr,q);
+        boolean ok = comfactController.modifProduit(cf,pr,q);
+        if(ok) affMsg("mise à jour effectuée");
+        else  affMsg("mise à jour infructueuse");
     }
 
 
@@ -117,7 +126,9 @@ public class ComfactViewConsole extends ComfactAbstractView {
             ComFact ncf = new ComFact(cf.getIdcommande(),numfact,cf.getDatecom(),etat,montant,cf.getClient());
             ncf.setDateFacturation(datefact);
             ncf.setDatePayement(datepay);
-            comfactController.update(ncf);
+            cf = comfactController.update(ncf);
+            if(cf==null) affMsg("mise à jour infrucueuse");
+            else affMsg("mise à jour effectuée : "+cf);
           }
 
     private void rechercher() {
@@ -134,14 +145,18 @@ public class ComfactViewConsole extends ComfactAbstractView {
     private void retirer() {
             int nl = choixElt(lcf);
             ComFact cf = lcf.get(nl-1);
-            comfactController.removeComfact(cf);
+           boolean ok = comfactController.removeComfact(cf);
+        if(ok) affMsg("commande effacée");
+        else affMsg("commande non effacée");
     }
 
     private void ajouter() {
             Client cl = clv.selectionner();
             ComFact cf = new ComFact();
             cf.setClient(cl);
-            comfactController.addComfact(cf);
+            cf=comfactController.addComfact(cf);
+        if(cf!=null) affMsg("création de :"+cf);
+        else affMsg("erreur de création");
      }
 
  }

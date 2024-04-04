@@ -50,29 +50,21 @@ public class ClientViewConsole extends ClientAbstractView {
 
         do {
             int ch = choixListe(Arrays.asList("commandes en cours", "factures non payees", "factures en retard", "factures payees", "produits achetés", "menu principal"));
+            if(ch==6) return;
+            List l =   switch (ch) {
+                case 1 ->  clientController.commandes(cl);
 
-            switch (ch) {
-                case 1:
-                    clientController.commandes(cl);
-                    break;
-                case 2:
-                    clientController.factNonPayees(cl);
-                    break;
-                case 3:
-                    clientController.factRetard(cl);
-                    break;
-                case 4:
-                    clientController.factPayees(cl);
-                    break;
-                case 5:
-                    clientController.produits(cl);
-                    break;
+                case 2 ->  clientController.factNonPayees(cl);
 
-                case 6:
-                    return;
-                default:
-                    System.out.println("choix invalide recommencez ");
-            }
+                case 3 ->   clientController.factRetard(cl);
+
+                case 4 ->   clientController.factPayees(cl);
+
+                case 5  ->   clientController.produits(cl);
+                default -> null;
+              };
+            if(l==null || l.isEmpty()) affMsg("aucun élément trouvée");
+            else affList(l);
         } while (true);
     }
 
@@ -88,7 +80,9 @@ public class ClientViewConsole extends ClientAbstractView {
         String rue = modifyIfNotBlank("rue", client.getRue());
         String num = modifyIfNotBlank("num", client.getNum());
         String tel = modifyIfNotBlank("nom", client.getTel());
-        clientController.updateClient(new Client(client.getIdclient(), nom, prenom, cp, localite, rue, num, tel));
+        Client cl =clientController.updateClient(new Client(client.getIdclient(), nom, prenom, cp, localite, rue, num, tel));
+        if(cl==null) affMsg("mise à jour infructueuse");
+        else affMsg("mise à jour effectuée : "+cl);
     }
 
     private void rechercher() {
@@ -105,7 +99,9 @@ public class ClientViewConsole extends ClientAbstractView {
     private void retirer() {
         int nl = choixElt(lc)-1;
         Client client = lc.get(nl);
-        clientController.removeClient(client);
+        boolean ok = clientController.removeClient(client);
+        if(ok) affMsg("client effacé");
+        else affMsg("client non effacé");
     }
 
     private void ajouter() {
@@ -123,7 +119,9 @@ public class ClientViewConsole extends ClientAbstractView {
         String num = sc.nextLine();
         System.out.print("téléphone: ");
         String tel = sc.nextLine();
-        clientController.addClient(new Client(0, nom, prenom, cp, loc, rue, num, tel));
+        Client cl = clientController.addClient(new Client(0, nom, prenom, cp, loc, rue, num, tel));
+        if(cl!=null) affMsg("création de :"+cl);
+        else affMsg("erreur de création");
     }
 
     @Override

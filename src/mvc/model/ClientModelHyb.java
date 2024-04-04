@@ -246,6 +246,6 @@ order by apiclient.idclient
 
     @Override
     public List getNotification() {
-        return null;
+        return getClients();
     }
 }

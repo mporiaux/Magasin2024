@@ -21,63 +21,40 @@ public class ClientController {
     public List<Client> getAll(){
         return model.getClients();
     }
-    public void addClient(Client client) {
-       Client cl = model.addClient(client);
-       if(cl!=null) view.affMsg("création de :"+cl);
-       else view.affMsg("erreur de création");
+    public Client addClient(Client client) {
+       return  model.addClient(client);
     }
 
-
-    public void removeClient(Client client) {
-        boolean ok = model.removeClient(client);
-        if(ok) view.affMsg("client effacé");
-        else view.affMsg("client non effacé");
-     }
-
-    public Client selectionner() {
-        Client cl = view.selectionner();
-        return cl;
+    public boolean removeClient(Client client) {
+      return model.removeClient(client);
     }
 
-    public void updateClient(Client client) {
-        Client cl =model.updateClient(client);
-        if(cl==null) view.affMsg("mise à jour infrucueuse");
-        else view.affMsg("mise à jour effectuée : "+cl);
+    public Client updateClient(Client client) {
+    return model.updateClient(client);
     }
 
     public Client search(int idClient) {
-        Client cl = model.readClient(idClient);
-        return cl;
+          return model.readClient(idClient);
     }
 
-    public void commandes(Client client) {
-     List<ComFact> lcf =   model.commandes(client);
-        if(lcf==null || lcf.isEmpty()) view.affMsg("aucune commande trouvée");
-        else view.affList(lcf);
+    public List<ComFact> commandes(Client client) {
+      return  model.commandes(client);
     }
 
-    public void factNonPayees(Client client) {
-        List<ComFact> lcf =   model.factNonPayees(client);
-        if(lcf==null || lcf.isEmpty()) view.affMsg("aucune commande trouvée");
-        else view.affList(lcf);
+    public List<ComFact> factNonPayees(Client client) {
+       return  model.factNonPayees(client);
     }
 
-    public void factRetard(Client client) {
-        List<ComFact> lcf =   model.factRetard(client);
-        if(lcf==null || lcf.isEmpty()) view.affMsg("aucune commande trouvée");
-        else view.affList(lcf);
+    public List<ComFact> factRetard(Client client) {
+        return  model.factRetard(client);
     }
 
-    public void factPayees(Client client) {
-        List<ComFact> lcf =  model.factPayees(client);
-        if(lcf==null || lcf.isEmpty()) view.affMsg("aucune commande trouvée");
-        else view.affList(lcf);
+    public List<ComFact> factPayees(Client client) {
+        return  model.factPayees(client);
     }
 
-    public void produits(Client client) {
-        List<Produit> lpr = model.produits(client);
-        if(lpr==null || lpr.isEmpty()) view.affMsg("aucun produit trouvé");
-        else view.affList(lpr);
+    public List<Produit> produits(Client client) {
+        return  model.produits(client);
     }
 }
 

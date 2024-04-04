@@ -53,7 +53,9 @@ public class ProduitViewConsole extends ProduitAbstractView {
             BigDecimal phtva = new BigDecimal(modifyIfNotBlank("prix HTVA",""+pr.getPhtva()));
             int stock = Integer.parseInt(modifyIfNotBlank("stock",""+pr.getStock()));
             int stockMin= Integer.parseInt(modifyIfNotBlank("stock min",""+pr.getStockMin()));
-           produitController.update(new Produit(pr.getIdproduit(),numprod,description,phtva,stock,stockMin));
+           Produit prmaj =  produitController.update(new Produit(pr.getIdproduit(),numprod,description,phtva,stock,stockMin));
+           if(prmaj==null) affMsg("mise à jour infrucueuse");
+           else affMsg("mise à jour effectuée : "+prmaj);
     }
 
     private void rechercher() {
@@ -66,7 +68,9 @@ public class ProduitViewConsole extends ProduitAbstractView {
 
     int nl = choixElt(lp);
     Produit pr = lp.get(nl-1);
-     produitController.removeProduit(pr);
+      boolean ok = produitController.removeProduit(pr);
+        if(ok) affMsg("produit effacé");
+        else affMsg("produit non effacé");
     }
 
     private void ajouter() {
@@ -80,7 +84,9 @@ public class ProduitViewConsole extends ProduitAbstractView {
         int stock = Integer.parseInt(sc.next());
         System.out.print("stock min : ");
         int stockMin= Integer.parseInt(sc.next());
-        produitController.addProduit(new Produit(0,numprod,description,phtva,stock,stockMin)) ;
+        Produit pr = produitController.addProduit(new Produit(0,numprod,description,phtva,stock,stockMin)) ;
+        if(pr!=null) affMsg("création de :"+pr);
+        else affMsg("erreur de création");
      }
 
     @Override

@@ -19,53 +19,41 @@ public class ComfactController {
         this.view.setController(this);
     }
 
-
     public List<ComFact> getAll(){
         return model.getComfacts();
     }
 
-    public void removeComfact(ComFact comfact) {
-        boolean ok = model.removeComfact(comfact);
-        if(ok) view.affMsg("commande effacée");
-        else view.affMsg("commande non effacée");
-        List<ComFact> comfacts = model.getComfacts();
+    public boolean removeComfact(ComFact comfact) {
+        return  model.removeComfact(comfact);
     }
 
-    public void update(ComFact comfact) {
-        ComFact cf =model.updateComfact(comfact);
-        if(cf==null) view.affMsg("mise à jour infrucueuse");
-        else view.affMsg("mise à jour effectuée : "+cf);
+    public ComFact update(ComFact comfact) {
+         return model.updateComfact(comfact);
     }
 
     public ComFact search(int idCommande) {
-        ComFact cf  = model.readComfact(idCommande);
-       return cf;
+       return  model.readComfact(idCommande);
     }
 
-    public void addProduit(ComFact cf,int q,Produit pr){
-        boolean ok =  model.addProd(cf,pr,q);
-       if(ok) view.affMsg("produit ajouté");
-       else view.affMsg("erreur lors de l'ajout du produit");
+    public boolean addProduit(ComFact cf,int q,Produit pr){
+       return  model.addProd(cf,pr,q);
     }
 
-    public void modifProduit(ComFact cf,Produit pr,int q){
-        model.updateProd(cf,pr,q);
+    public boolean modifProduit(ComFact cf,Produit pr,int q){
+        return model.updateProd(cf,pr,q);
     }
 
-    public void supProduit(ComFact cf,Produit pr){
-        model.removeProd(cf,pr);
+    public boolean supProduit(ComFact cf,Produit pr){
+
+        return  model.removeProd(cf,pr);
     }
 
-    public void getProduits(ComFact cf){
-        List<Ligne> ll = model.getProduits(cf);
-        if(ll.isEmpty()) view.affMsg("aucune ligne pour cette commmande");
-        else view.affList(ll);
+    public List<Ligne> getProduits(ComFact cf){
+        return model.getProduits(cf);
     }
 
-    public void addComfact(ComFact cf) {
-        cf=model.addComfact(cf);
-        if(cf!=null) view.affMsg("création de :"+cf);
-        else view.affMsg("erreur de création");
+    public ComFact addComfact(ComFact cf) {
+        return model.addComfact(cf);
     }
 }
 
