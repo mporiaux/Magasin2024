@@ -141,6 +141,17 @@ public class Produit {
         return numprod;
     }
 
+    public int getIdproduit() {
+        return idproduit;
+    }
+
+    public void setIdproduit(int idproduit) {
+        this.idproduit = idproduit;
+    }
+
+    public void setNumprod(String numprod) {
+        this.numprod = numprod;
+    }
 
     @Override
     public String toString() {

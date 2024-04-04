@@ -75,6 +75,9 @@ public class ComFact {
         this.client = client;
     }
 
+    public ComFact() {
+
+    }
 
 
     /**

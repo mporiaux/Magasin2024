@@ -1,6 +1,5 @@
 package magasin.metier;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,13 +48,13 @@ public class Client {
      */
     protected String tel;
     /**
-     * ensemble des commandes du client
+     * Ensemble des commandes du client
      */
     protected List<ComFact> comFacts = new ArrayList<>();
 
 
     /**
-     * constructeur paramétré
+     * Constructeur paramétré
      *
      * @param idclient identifiant unique du client, affecté par la base de
      * données
