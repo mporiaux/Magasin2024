@@ -29,6 +29,7 @@ public class GestMagasin {
         pm=new ProduitModelDB();
 
         cv = new ClientViewConsole();
+        //cv= new ClientVueGraph();
         cfv = new ComfactViewConsole();
         pv =  new ProduitViewConsole();
 
@@ -38,7 +39,10 @@ public class GestMagasin {
 
         cfv.setClientView(cv);
         cfv.setProduitView(pv);
+
         cm.addObserver(cv);
+        pm.addObserver(pv);
+        cfm.addObserver(cfv);
 
         List<String> loptions = Arrays.asList("clients","commandes","produits","fin");
         do {

@@ -75,7 +75,7 @@ public class ProduitViewConsole extends ProduitAbstractView {
 
     private void ajouter() {
         System.out.print("numéro de produit : ");
-        String numprod= sc.next();
+        String numprod= sc.nextLine();
         System.out.print("description : ");
         String description = sc.nextLine();
         System.out.print("prix HTVA :");
