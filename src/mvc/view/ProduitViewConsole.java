@@ -54,7 +54,7 @@ public class ProduitViewConsole extends ProduitAbstractView {
             int stock = Integer.parseInt(modifyIfNotBlank("stock",""+pr.getStock()));
             int stockMin= Integer.parseInt(modifyIfNotBlank("stock min",""+pr.getStockMin()));
            Produit prmaj =  produitController.update(new Produit(pr.getIdproduit(),numprod,description,phtva,stock,stockMin));
-           if(prmaj==null) affMsg("mise à jour infrucueuse");
+           if(prmaj==null) affMsg("mise à jour infructueuse");
            else affMsg("mise à jour effectuée : "+prmaj);
     }
 
@@ -79,11 +79,11 @@ public class ProduitViewConsole extends ProduitAbstractView {
         System.out.print("description : ");
         String description = sc.nextLine();
         System.out.print("prix HTVA :");
-        BigDecimal phtva = new BigDecimal(sc.next());
+        BigDecimal phtva = new BigDecimal(sc.nextLine());
         System.out.print("stock : ");
-        int stock = Integer.parseInt(sc.next());
+        int stock = Integer.parseInt(sc.nextLine());
         System.out.print("stock min : ");
-        int stockMin= Integer.parseInt(sc.next());
+        int stockMin= Integer.parseInt(sc.nextLine());
         Produit pr = produitController.addProduit(new Produit(0,numprod,description,phtva,stock,stockMin)) ;
         if(pr!=null) affMsg("création de :"+pr);
         else affMsg("erreur de création");
