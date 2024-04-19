@@ -23,8 +23,8 @@ public class GestMagasin {
 
 
     public void gestion(){
-         cm = new ClientModelDB();
-        //cm = new ClientModelHyb();
+         //cm = new ClientModelDB();
+        cm = new ClientModelHyb();
         cfm = new ComfactModelDB();
         pm=new ProduitModelDB();
 

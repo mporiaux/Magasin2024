@@ -1,8 +1,6 @@
 package mvc.view;
 
 import magasin.metier.Client;
-import magasin.metier.ComFact;
-import magasin.metier.Produit;
 import mvc.controller.ClientController;
 import mvc.observer.Observer;
 

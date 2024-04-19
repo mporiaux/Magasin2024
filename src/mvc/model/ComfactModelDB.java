@@ -123,7 +123,8 @@ public class ComfactModelDB extends DAOComfact {
                 date =rs.getDate(15);
                 LocalDate datepay = date!=null?date.toLocalDate():null;
                 ComFact cf = new ComFact(idcommande,numfact,datecom,etat,montant,cl);
-
+                cf.setDateFacturation(datefact);
+                cf.setDatePayement(datepay);
                 return  cf;
 
             }
