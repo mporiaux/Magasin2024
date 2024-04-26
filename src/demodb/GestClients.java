@@ -59,7 +59,7 @@ public class GestClients {
 
 
 
-    public void ajout() {
+   /* public void ajout() {
 
         System.out.print("nom :");
         String nom = sc.nextLine();
@@ -105,7 +105,46 @@ public class GestClients {
         } catch (SQLException e) {
             System.out.println("erreur sql :"+e);
         }
-      }
+      }*/
+    public void ajout() {
+
+        System.out.print("nom :");
+        String nom = sc.nextLine();
+        System.out.print("prénom :");
+        String prenom = sc.nextLine();
+        System.out.print("cp :");
+        Integer cp = sc.nextInt();
+        sc.skip("\n");
+        System.out.print("localite :");
+        String loc = sc.nextLine();
+        System.out.print("rue :");
+        String rue = sc.nextLine();
+        System.out.print("numéro :");
+        String num = sc.nextLine();
+        System.out.print("tel :");
+        String tel = sc.nextLine();
+        String query1 = "call apicreatecli(?,?,?,?,?,?,?,?)";
+
+        try(CallableStatement cs= dbConnect.prepareCall(query1);
+
+        ){
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.setString(2,nom);
+            cs.setString(3,prenom);
+            cs.setInt(4,cp);
+            cs.setString(5,loc);
+            cs.setString(6,rue);
+            cs.setString(7,num);
+            cs.setString(8,tel);
+            cs.executeUpdate();
+            int numcli = cs.getInt(1);
+            System.out.println("numéro de client = "+numcli);
+
+
+        } catch (SQLException e) {
+            System.out.println("erreur sql :"+e);
+        }
+    }
 
 
     public void recherche() {
